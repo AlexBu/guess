@@ -1,5 +1,10 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>iguess_select.qml</file>
+        <file>iguess_one_round.qml</file>
+        <file>iguess_result.qml</file>
+        <file>youguess_one_round.qml</file>
+        <file>youguess_result.qml</file>
     </qresource>
 </RCC>
