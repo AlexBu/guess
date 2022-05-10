@@ -2,11 +2,13 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 6.2
 
-Window {
+import Guesser 1.0
+import Guessee 1.0
+
+Frame {
     width: 640
     height: 480
     visible: true
-    title: qsTr("Guess!")
 
     Text {
         id: text1

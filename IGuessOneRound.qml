@@ -2,17 +2,16 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 6.2
 
-Window {
+Frame {
     width: 640
     height: 480
     visible: true
-    title: qsTr("Guess!")
 
     Text {
         id: text1
-        x: 271
-        y: 93
-        text: qsTr("show me the result")
+        x: 231
+        y: 102
+        text: qsTr("Select a number and don't tell me!")
         font.pixelSize: 12
     }
 
@@ -22,7 +21,7 @@ Window {
         y: 179
         width: 87
         height: 24
-        text: qsTr("Play Again!")
+        text: qsTr("I am Ready!")
         font.pixelSize: 12
     }
 }
