@@ -43,7 +43,6 @@ Window {
                 font.pixelSize: 12
 
                 onClicked: {
-                    the_guesser.start("I'm the guesser!");
                     stack.push(iGuessSelect)
                 }
             }
@@ -82,16 +81,28 @@ Window {
                 height: 24
                 text: qsTr("I am Ready!")
                 font.pixelSize: 12
+                onClicked: {
+                    the_guesser.start("I'm the guesser!");
+                    stack.push(iGuessOneRound)
+                }
             }
         }
         Page {
             id: youGuessOneRound
             visible: parent.currentIndex === 2
             Text {
-                id: textGuesseePromptNumber
+                id: textIsIt2
                 x: 231
                 y: 106
-                text: qsTr("Select a number and don't tell me!")
+                text: qsTr("Is it:")
+                font.pixelSize: 12
+            }
+
+            Text {
+                id: text3
+                x: 297
+                y: 102
+                text: qsTr("Text")
                 font.pixelSize: 12
             }
 
@@ -104,27 +115,85 @@ Window {
                 text: qsTr("I am Ready!")
                 font.pixelSize: 12
             }
+
         }
         Page {
             id: iGuessOneRound
             visible: parent.currentIndex === 3
             Text {
-                id: text1
+                id: textIsIt
                 x: 231
                 y: 102
-                text: qsTr("Select a number and don't tell me!")
+                width: 49
+                height: 16
+                text: qsTr("Is it :")
                 font.pixelSize: 12
+            }
+            Text {
+                id: textGuesserPrompted
+                x: 330
+                y: 102
+                width: 27
+                height: 16
+                font.pixelSize: 12
+                text: the_guesser.current
+                Connections {
+                    target: the_guesser
+                    onCurrentChanged: {
+                        console.log("onCurrentChanged")
+                    }
+                }
+            }
+
+            ComboBox {
+                id: comboBoxValA
+                x: 211
+                y: 230
+                width: 34
+                height: 20
+            }
+
+            ComboBox {
+                id: comboBoxValB
+                x: 330
+                y: 230
+                width: 29
+                height: 20
             }
 
             Button {
-                id: button
+                id: buttonGuesserContinue
                 x: 277
-                y: 179
+                y: 352
                 width: 87
                 height: 24
-                text: qsTr("I am Ready!")
+                text: qsTr("Continue!")
+                font.pixelSize: 12
+                onClicked: {
+                    the_guesser.guess("");
+                    stack.push(iGuessResult)
+                }
+            }
+
+            Text {
+                id: textStaticA
+                x: 265
+                y: 234
+                text: qsTr("A")
                 font.pixelSize: 12
             }
+
+            Text {
+                id: textStaticB
+                x: 377
+                y: 234
+                width: 28
+                height: 16
+                text: qsTr("B")
+                font.pixelSize: 12
+            }
+
+
         }
         Page {
             id: iGuessResult
@@ -145,6 +214,12 @@ Window {
                 height: 24
                 text: qsTr("Play Again!")
                 font.pixelSize: 12
+                onClicked: {
+                    the_guesser.end("");
+                    stack.pop();
+                    stack.pop();
+                    stack.pop();
+                }
             }
         }
         Page {
