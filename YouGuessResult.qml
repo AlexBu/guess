@@ -2,10 +2,10 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 6.2
 
-Frame {
+Page {
     width: 640
     height: 480
-    visible: true
+    visible: false
 
     Text {
         id: text2

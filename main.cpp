@@ -12,8 +12,10 @@ int main(int argc, char *argv[])
 #endif
     QGuiApplication app(argc, argv);
 
-    qmlRegisterType<Guesser>("Guesser", 1, 0, "Guesser1");
-    qmlRegisterType<Guessee>("Guessee", 1, 0, "Guessee1");
+    qmlRegisterUncreatableType<Guesser>("Guesser", 1, 0, "Guesser1",
+        "cannot create guesser object");
+    qmlRegisterUncreatableType<Guessee>("Guessee", 1, 0, "Guessee1",
+        "cannot create guessee object");
 
     Guesser the_guesser;
     Guessee the_guessee;

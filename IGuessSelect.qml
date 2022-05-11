@@ -5,10 +5,11 @@ import QtQuick.Controls 6.2
 import Guesser 1.0
 import Guessee 1.0
 
-Frame {
+Page {
     width: 640
     height: 480
-    visible: true
+    visible: false
+
 
     Text {
         id: text1
