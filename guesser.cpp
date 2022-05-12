@@ -57,16 +57,15 @@ void Guesser::nextRound()
 {
     m_round_value++;
     setRound(QString("%1").arg(m_round_value));
-
 }
 
-void Guesser::filterResult(int a, int b)
+void Guesser::filterResult(void)
 {
     // a + b <= 4 && a != 4
     backup_candidates.clear();
-    QList<Number>::const_iterator iter;
-    for (iter = candidates.cbegin(); iter != candidates.cend(); ++iter) {
-        if( iter->verifyAB(m_current, a, b) == true) {
+    QList<Number>::iterator iter;
+    for (iter = candidates.begin(); iter != candidates.end(); ++iter) {
+        if( iter->verifyAB(m_current, m_valueA, m_valueB) == true) {
             backup_candidates.push_back(*iter);
         }
     }
@@ -83,17 +82,16 @@ void Guesser::start(QString &in)
     initAB();
 }
 
-bool Guesser::guess(int a, int b)
+bool Guesser::guess(void)
 {
-    qDebug() << "guess one time " << a << b;
     qDebug() << "total " << candidates.size() << " numbers now";
-    if(a == 4 && b == 0) {
+    if(m_valueA == 4 && m_valueB == 0) {
         qDebug() << "success!";
         setResult("Great, see how I'm smart! Let's try again!");
         return true;
-    } else if(a + b <= 4) {
+    } else if(m_valueA + m_valueB <= 4) {
         qDebug() << "filter";
-        filterResult(a, b);
+        filterResult();
         // check left number
         if(candidates.size() == 0) {
             // display error page
@@ -113,7 +111,7 @@ bool Guesser::guess(int a, int b)
 
 void Guesser::end(QString &in)
 {
-    qDebug() << "guess ended " << in;
+    qDebug() << "guesser ended " << in;
 }
 
 QString Guesser::current() const

@@ -14,20 +14,34 @@ QString Number::ToQString(void)
             .arg(n[3]);
 }
 
-bool Number::verifyAB(QString src, int a, int b) const
+void Number::calcAB(QString src, int &a, int &b)
 {
-    int real_a = 0;
-    int real_b = 0;
+    a = 0;
+    b = 0;
     for(int i = 0; i < 4; i++) {
         for(int j = 0; j < 4; j++) {
             if(src[i] == n[j]) {
                 if(i == j) {
-                    real_a++;
+                    a++;
                 } else {
-                    real_b++;
+                    b++;
                 }
             }
         }
     }
+}
+
+bool Number::verifyAB(QString src, int a, int b)
+{
+    int real_a = 0;
+    int real_b = 0;
+    calcAB(src, real_a, real_b);
     return ((a == real_a) && (b == real_b));
+}
+
+void Number::setNumber(int num, int bit)
+{
+    if(bit >= 0 && bit < 4) {
+        n[bit] = QChar(num % 10 + '0');
+    }
 }

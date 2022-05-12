@@ -35,7 +35,7 @@ private:
     void initRound(void);
     void initAB(void);
     void nextRound(void);
-    void filterResult(int a, int b);
+    void filterResult(void);
 
     QList<Number> candidates, backup_candidates;
     QString m_current;
@@ -66,7 +66,7 @@ signals:
 
 public slots:
     void start(QString &in);
-    bool guess(int a, int b);
+    bool guess(void);
     void end(QString &in);
 };
 
