@@ -20,6 +20,8 @@ set(PROJECT_SOURCES
         guesser.h
         guessee.cpp
         guessee.h
+        number.cpp
+        number.h
         qml.qrc
 )
 

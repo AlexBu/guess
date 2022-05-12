@@ -9,7 +9,7 @@ Window {
     width: 640
     height: 480
     visible: true
-    title: qsTr("Guess!")
+    title: qsTr("Let's Guess!")
 
 
     StackView {
@@ -151,6 +151,15 @@ Window {
                 y: 230
                 width: 34
                 height: 20
+                textRole: "value"
+                valueRole: "value"
+                model: [
+                    {value: 0, text: "0"},
+                    {value: 1, text: "1"},
+                    {value: 2, text: "2"},
+                    {value: 3, text: "3"},
+                    {value: 4, text: "4"}
+                ]
             }
 
             ComboBox {
@@ -159,6 +168,15 @@ Window {
                 y: 230
                 width: 29
                 height: 20
+                textRole: "value"
+                valueRole: "value"
+                model: [
+                    {value: 0, text: "0"},
+                    {value: 1, text: "1"},
+                    {value: 2, text: "2"},
+                    {value: 3, text: "3"},
+                    {value: 4, text: "4"}
+                ]
             }
 
             Button {
@@ -170,8 +188,8 @@ Window {
                 text: qsTr("Continue!")
                 font.pixelSize: 12
                 onClicked: {
-                    the_guesser.guess("");
-                    stack.push(iGuessResult)
+                    the_guesser.guess(comboBoxValA.currentValue, comboBoxValB.currentValue);
+                    stack.push(iGuessResult);
                 }
             }
 
