@@ -91,7 +91,7 @@ Window {
             id: youGuessOneRound
             visible: parent.currentIndex === 2
             Text {
-                id: textIsIt2
+                id: textIsItYou2
                 x: 231
                 y: 106
                 text: qsTr("Is it:")
@@ -120,6 +120,30 @@ Window {
         Page {
             id: iGuessOneRound
             visible: parent.currentIndex === 3
+
+            Text {
+                id: textStaticRound
+                x: 255
+                y: 50
+                text: "Round: "
+                font.pixelSize: 12
+            }
+            Text {
+                id: textRound
+                x: 355
+                y: 50
+                width: 49
+                height: 16
+                text: the_guesser.round
+                font.pixelSize: 12
+                Connections {
+                    target: the_guesser
+                    function onRoundChanged() {
+                        console.log("onRoundChanged")
+                        textRound.text = the_guesser.round
+                    }
+                }
+            }
             Text {
                 id: textIsIt
                 x: 231
@@ -139,7 +163,7 @@ Window {
                 text: the_guesser.current
                 Connections {
                     target: the_guesser
-                    onCurrentChanged: {
+                    function onCurrentChanged() {
                         console.log("onCurrentChanged")
                     }
                 }
@@ -160,6 +184,18 @@ Window {
                     {value: 3, text: "3"},
                     {value: 4, text: "4"}
                 ]
+                onCurrentIndexChanged: {
+                    console.log("on current index A changed")
+                    the_guesser.valueA = comboBoxValA.currentIndex;
+                }
+
+                Connections {
+                    target: the_guesser
+                    function onValueAChanged() {
+                        console.log("onValueAChanged")
+                        comboBoxValA.currentIndex = the_guesser.valueA
+                    }
+                }
             }
 
             ComboBox {
@@ -170,6 +206,7 @@ Window {
                 height: 20
                 textRole: "value"
                 valueRole: "value"
+                currentIndex: the_guesser.valueB
                 model: [
                     {value: 0, text: "0"},
                     {value: 1, text: "1"},
@@ -177,6 +214,17 @@ Window {
                     {value: 3, text: "3"},
                     {value: 4, text: "4"}
                 ]
+                onCurrentIndexChanged: {
+                    console.log("on current index B changed")
+                    the_guesser.valueB = comboBoxValB.currentIndex;
+                }
+                Connections {
+                    target: the_guesser
+                    function onValueBChanged() {
+                        console.log("onValueBChanged")
+                        comboBoxValB.currentIndex = the_guesser.valueB
+                    }
+                }
             }
 
             Button {
@@ -188,8 +236,9 @@ Window {
                 text: qsTr("Continue!")
                 font.pixelSize: 12
                 onClicked: {
-                    the_guesser.guess(comboBoxValA.currentValue, comboBoxValB.currentValue);
-                    stack.push(iGuessResult);
+                    if (the_guesser.guess(comboBoxValA.currentValue, comboBoxValB.currentValue) === true) {
+                        stack.push(iGuessResult, {textResultText:the_guesser.result});
+                    }
                 }
             }
 
@@ -210,22 +259,21 @@ Window {
                 text: qsTr("B")
                 font.pixelSize: 12
             }
-
-
         }
         Page {
             id: iGuessResult
             visible: parent.currentIndex === 4
+            property alias textResultText: textResult.text
             Text {
-                id: text12
-                x: 271
+                id: textResult
+                x: 220
                 y: 93
-                text: qsTr("show me the result")
+                text: "Guess result"
                 font.pixelSize: 12
             }
 
             Button {
-                id: button11
+                id: buttonAgain
                 x: 277
                 y: 179
                 width: 87

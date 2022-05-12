@@ -18,8 +18,8 @@ bool Number::verifyAB(QString src, int a, int b) const
 {
     int real_a = 0;
     int real_b = 0;
-    for(int i = 0; i < 3; i++) {
-        for(int j = 0; j < 3; j++) {
+    for(int i = 0; i < 4; i++) {
+        for(int j = 0; j < 4; j++) {
             if(src[i] == n[j]) {
                 if(i == j) {
                     real_a++;

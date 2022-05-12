@@ -7,6 +7,17 @@ Guesser::Guesser(QObject *parent)
 
 }
 
+void Guesser::pickCurrent()
+{
+    long total = candidates.size();
+    qDebug() << "total " <<total << " in array";
+    // set current guess number
+    long index = rand() % total;
+    Number &num = candidates[index];
+    candidates.removeAt(index);
+    setCurrent(num.ToQString());
+}
+
 void Guesser::initArray()
 {
     // initialize the number list
@@ -28,10 +39,25 @@ void Guesser::initArray()
             candidates.push_back(num);
         }
     }
-    long total = candidates.size();
-    Number &num = candidates[rand()%total];
-    setCurrent(num.ToQString());
-    qDebug() << "total " <<total << " in array";
+}
+
+void Guesser::initRound()
+{
+    m_round_value = 1;
+    setRound(QString("%1").arg(m_round_value));
+}
+
+void Guesser::initAB()
+{
+    setValueA(0);
+    setValueB(0);
+}
+
+void Guesser::nextRound()
+{
+    m_round_value++;
+    setRound(QString("%1").arg(m_round_value));
+
 }
 
 void Guesser::filterResult(int a, int b)
@@ -52,19 +78,36 @@ void Guesser::start(QString &in)
 {
     qDebug() << "the button says: " << in;
     initArray();
+    initRound();
+    pickCurrent();
+    initAB();
 }
 
-void Guesser::guess(int a, int b)
+bool Guesser::guess(int a, int b)
 {
     qDebug() << "guess one time " << a << b;
     qDebug() << "total " << candidates.size() << " numbers now";
     if(a == 4 && b == 0) {
         qDebug() << "success!";
+        setResult("Great, see how I'm smart! Let's try again!");
+        return true;
     } else if(a + b <= 4) {
         qDebug() << "filter";
         filterResult(a, b);
+        // check left number
+        if(candidates.size() == 0) {
+            // display error page
+            setResult("Oops, something is wrong! Let's try again!");
+            return true;
+        }
+        pickCurrent();
+        initAB();
+        nextRound();
+        return false;
     } else {
-        qDebug() << "error in AB values!";
+        // display error page
+        setResult("Oops, something is wrong! Let's try again!");
+        return true;
     }
 }
 
@@ -85,4 +128,60 @@ void Guesser::setCurrent(QString newCurrent)
     m_current = newCurrent;
     qDebug() << "set current " << m_current;
     emit currentChanged();
+}
+
+int Guesser::valueA() const
+{
+    return m_valueA;
+}
+
+void Guesser::setValueA(int newValueA)
+{
+    if(m_valueA == newValueA)
+        return;
+    m_valueA = newValueA;
+    qDebug() << "set value A " << m_valueA;
+    emit valueAChanged();
+}
+
+int Guesser::valueB() const
+{
+    return m_valueB;
+}
+
+void Guesser::setValueB(int newValueB)
+{
+    if(m_valueB == newValueB)
+        return;
+    m_valueB = newValueB;
+    qDebug() << "set value B " << m_valueB;
+    emit valueBChanged();
+}
+
+
+QString Guesser::round() const
+{
+    return m_round;
+}
+
+void Guesser::setRound(QString newRound)
+{
+    if (m_round == newRound)
+        return;
+    m_round = newRound;
+    qDebug() << "set round " << m_round;
+    emit roundChanged();
+}
+
+const QString Guesser::result() const
+{
+    return m_result;
+}
+
+void Guesser::setResult(QString newResult)
+{
+    if (m_result == newResult)
+        return;
+    m_result = newResult;
+    emit resultChanged();
 }
