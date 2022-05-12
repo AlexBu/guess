@@ -6,6 +6,7 @@ import Guesser 1.0
 import Guessee 1.0
 
 Window {
+    id: window
     width: 640
     height: 480
     visible: true
@@ -88,38 +89,8 @@ Window {
             }
         }
         Page {
-            id: youGuessOneRound
-            visible: parent.currentIndex === 2
-            Text {
-                id: textIsItYou2
-                x: 231
-                y: 106
-                text: qsTr("Is it:")
-                font.pixelSize: 12
-            }
-
-            Text {
-                id: text3
-                x: 297
-                y: 102
-                text: qsTr("Text")
-                font.pixelSize: 12
-            }
-
-            Button {
-                id: buttonGuesseeReady
-                x: 277
-                y: 179
-                width: 87
-                height: 24
-                text: qsTr("I am Ready!")
-                font.pixelSize: 12
-            }
-
-        }
-        Page {
             id: iGuessOneRound
-            visible: parent.currentIndex === 3
+            visible: parent.currentIndex === 2
 
             Text {
                 id: textStaticRound
@@ -262,7 +233,7 @@ Window {
         }
         Page {
             id: iGuessResult
-            visible: parent.currentIndex === 4
+            visible: parent.currentIndex === 3
             property alias textResultText: textResult.text
             Text {
                 id: textResult
@@ -287,6 +258,36 @@ Window {
                     stack.pop();
                 }
             }
+        }
+        Page {
+            id: youGuessOneRound
+            visible: parent.currentIndex === 4
+            Text {
+                id: textIsItYou2
+                x: 231
+                y: 106
+                text: qsTr("Is it:")
+                font.pixelSize: 12
+            }
+
+            Text {
+                id: text3
+                x: 297
+                y: 102
+                text: qsTr("Text")
+                font.pixelSize: 12
+            }
+
+            Button {
+                id: buttonGuesseeReady
+                x: 277
+                y: 179
+                width: 87
+                height: 24
+                text: qsTr("I am Ready!")
+                font.pixelSize: 12
+            }
+
         }
         Page {
             id: youGuessResult
